@@ -13,7 +13,7 @@ X - Get a pre-setup board (Working on adding so the board will be set up in new 
 
 -----------------------------------------------------------------
 			
-When tile selected:
+When tile selected keybinds:
 
 
 ESCAPE - Clear whole tile
