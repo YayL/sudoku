@@ -6,35 +6,31 @@ def clearBoard(board, tiles):
                     board.board[col][row][i] = 0
 
 
-def grid(board, tiles, win, events, draw, running):
-    if running:
-        for row in range(9):
-            for col in range(9):
-                if board.board[col][row][0] == 0 and not tiles[row * 9 + col].preset:
-                    for num in range(1, 10):
+def grid(board, tiles, win, events, draw):
+    for row in range(9):
+        for col in range(9):
+            if board.board[col][row][0] == 0 and not tiles[row * 9 + col].preset:
+                for num in range(1, 10):
 
-                        preNum = board.board[col][row][0]
+                    if board.isSafe(tiles[row * 9 + col], tiles, num):
+
                         board.board[col][row][0] = num
+
                         draw(win, tiles, board, True)
-                        running = events(board, tiles, win, running, True)
 
-                        if board.isSafe(tiles[row * 9 + col], tiles):
+                        if grid(board, tiles, win, events, draw):
+                            return True
 
-                            if grid(board, tiles, win, events, draw, running):
-                                return True
-
-                            board.board[col][row][0] = 0
-                        else:
-                            board.board[col][row][0] = preNum
-                    return False
-        if board.finish:
-            return True
-        return False
+                        board.board[col][row][0] = 0
+                return False
+    if board.finish:
+        return True
+    return False
 
 
-def solve(board, tiles, win, events, draw, running):
+def solve(board, tiles, win, events, draw):
     clearBoard(board, tiles)
-    if grid(board, tiles, win, events, draw, running):
+    if grid(board, tiles, win, events, draw):
         print("Sudoku has been solved")
     else:
         print("Did not find a solution")

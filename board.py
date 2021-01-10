@@ -74,15 +74,19 @@ class Board:
             string += "\n"
         print(string)
 
-    def isSafe(self, t, tiles):
+    def isSafe(self, t, tiles, value=None):
         x, y = t.xInd, t.yInd
-        if self.board[t.xInd][t.yInd][0] != 0:
+
+        if value is None:
+            value = self.board[x][y][0]
+
+        if value != 0:
             for s in self.getSquare(t):
-                if s == self.board[x][y][0]:
+                if s == value:
                     return False
             for temp in tiles:
                 if not (temp.xInd == x and temp.yInd == y):
-                    if (temp.xInd == x or temp.yInd == y) and self.board[temp.xInd][temp.yInd][0] == self.board[x][y][0] and self.board[x][y][0] != 0:
+                    if (temp.xInd == x or temp.yInd == y) and self.board[temp.xInd][temp.yInd][0] == value:
                         return False
 
         return True

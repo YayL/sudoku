@@ -49,7 +49,7 @@ def draw(win, tiles, board, isSolving=False):
     pygame.display.update()
 
 
-def events(board, tiles, win, running, isSolving=False):
+def events(board, tiles, win, running):
 
     for event in pygame.event.get():
 
@@ -60,7 +60,7 @@ def events(board, tiles, win, running, isSolving=False):
             quit()
 
         # -- Key press handling --
-        elif event.type == pygame.KEYDOWN and not isSolving:
+        elif event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_ESCAPE:
                 for t in tiles:
@@ -90,7 +90,7 @@ def events(board, tiles, win, running, isSolving=False):
                         board.board[t.xInd][t.yInd][board.type] = 0
                         t.preset = False
             elif event.key == pygame.K_s:
-                solver.solve(board, tiles, win, events, draw, running)
+                solver.solve(board, tiles, win, events, draw)
             elif event.key == pygame.K_x:
                 board.setUp(tiles)
             elif event.key == pygame.K_p:
