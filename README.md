@@ -2,13 +2,17 @@ Sudoku game with solver.
 			
 Keybinds:
 
+
 TAB - Turn on preset mode to draw your own puzzle
 
 S - Automaticaly solve the board
 
 X - Get a pre-setup board (Working on adding so the board will be set up in new and random ways everytime)
+
+
 			
 When tile selected:
+
 
 ESCAPE - Clear whole tile
 
