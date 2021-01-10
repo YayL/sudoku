@@ -1,3 +1,4 @@
+image: gitpod/workspace-full-vnc
 tasks:
-  - init: npm install
-    command: npm start
+  - init: pip3 install -r requirements.txt
+    command: python3 hangman.py
