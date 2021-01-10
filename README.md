@@ -1,5 +1,7 @@
 Sudoku game with solver.
-			
+
+-----------------------------------------------------------------
+
 Keybinds:
 
 
@@ -9,7 +11,7 @@ S - Automaticaly solve the board
 
 X - Get a pre-setup board (Working on adding so the board will be set up in new and random ways everytime)
 
-
+-----------------------------------------------------------------
 			
 When tile selected:
 
@@ -25,3 +27,5 @@ E - Go right on options for the number in tile
 BACKSPACE or 0 - Remove number within selected part of selected tile
 
 1-9: Add number to selected part of tile
+
+-----------------------------------------------------------------
