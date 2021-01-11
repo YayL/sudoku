@@ -1,5 +1,0 @@
-image: gitpod/workspace-full-vnc
-tasks:
-  - before: pip3 install -r requirements.txt
-    init: npm install
-    command: npm start dev
