@@ -13,6 +13,8 @@ S - Automaticaly solve the board
 
 X - Generate a Sudoku puzzle for you to solve (Might stumble sometimes so just relaunch the application and try again)
 
+C - Clear all non-preset(Blue) tiles 
+
 -----------------------------------------------------------------
 			
 When tile selected keybinds:
