@@ -1,4 +1,5 @@
 import re
+import time
 
 from tiles import *
 import solver
@@ -8,7 +9,7 @@ WIDTH, HEIGHT = 900, 900
 pattern = "[1-9]"
 
 
-def draw(win, tiles, board, isSolving=False):
+def draw(win, tiles, board, normal=False):
     win.fill((20, 20, 20))
 
     board.checkFinished(tiles)
@@ -27,16 +28,16 @@ def draw(win, tiles, board, isSolving=False):
                 t.tilesRender(win, board, board.errorColor)
             elif t.preset:
                 t.tilesRender(win, board, board.presetColor)
-            elif t.selected and not isSolving:
+            elif t.selected and not normal:
                 t.tilesRender(win, board, board.selectedColor)
             elif (t.yInd*9 + t.xInd) % 2 == 0:
                 t.tilesRender(win, board, board.normalColors[1])
             else:
                 t.tilesRender(win, board, board.normalColors[0])
-            if (t.error or t.preset) and not isSolving:
+            if (t.error or t.preset) and not normal:
                 t.tilesUpdate(win, board, mouse, click, tiles, False)
                 continue
-            if not isSolving:
+            if not normal:
                 t.tilesUpdate(win, board, mouse, click, tiles)
         else:
             if (t.yInd*9 + t.xInd) % 2 == 0:
@@ -49,7 +50,7 @@ def draw(win, tiles, board, isSolving=False):
     pygame.display.update()
 
 
-def events(board, tiles, win, running):
+def events(board, tiles, win, running, normal=False):
 
     for event in pygame.event.get():
 
@@ -60,7 +61,7 @@ def events(board, tiles, win, running):
             quit()
 
         # -- Key press handling --
-        elif event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN and not normal:
 
             if event.key == pygame.K_ESCAPE:
                 for t in tiles:
@@ -90,9 +91,11 @@ def events(board, tiles, win, running):
                         board.board[t.xInd][t.yInd][board.type] = 0
                         t.preset = False
             elif event.key == pygame.K_s:
-                solver.solve(board, tiles, win, events, draw)
+                start = time.time()
+                solver.solve(board, tiles, win, draw, events)
+                print(time.time() - start)
             elif event.key == pygame.K_x:
-                board.setUp(tiles)
+                board.setUp(tiles, win, draw, events)
             elif event.key == pygame.K_p:
                 board.printBoard()
 

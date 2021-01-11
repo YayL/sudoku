@@ -3,9 +3,11 @@
 #  1) Place numbers randomly and check if number is allowed to be there, otherwise loop until found another number or move on
 #  2) Solve that puzzle
 #  3) Remove squares randomly; Amount removed depends on the difficulty
-
+import random
 import pygame
 import math
+
+import solver
 
 
 class Board:
@@ -15,6 +17,8 @@ class Board:
         self.height = height
         self.color = (20, 20, 20)
         self.board = [[[0 for k in range(5)] for j in range(9)] for i in range(9)]
+        self.randomness = 30
+        self.difficulty = 1
         self.type = 0  # [0] Main [1] Top-Left [2] Top-Right [3] Bottom-Right [4] Bottom-Left
         # -- States --
         self.presetMode = False
@@ -26,20 +30,26 @@ class Board:
         self.presetColor = (35, 74, 112)
         self.selectedColor = (207, 105, 93)
 
-    def setUp(self, tiles):
-        num = [[1, 0, 7], [3, 0, 9], [5, 0, 4], [6, 0, 5], [8, 0, 1],
-               [5, 1, 7], [6, 1, 6],
-               [3, 2, 6], [4, 2, 1], [5, 2, 3], [8, 2, 7],
-               [1, 3, 5], [2, 3, 7], [5, 3, 2], [7, 3, 9], [8, 3, 6],
-               [0, 4, 3], [2, 4, 6], [3, 4, 7], [5, 4, 5], [6, 4, 2],
-               [1, 5, 8], [3, 5, 1], [4, 5, 9], [6, 5, 7],
-               [1, 6, 1], [7, 6, 6], [8, 6, 2],
-               [0, 7, 9], [1, 7, 2], [2, 7, 8], [3, 7, 5], [5, 7, 1], [8, 7, 4],
-               [1, 8, 6], [3, 8, 4], [7, 8, 8], [8, 8, 5]]
+    def setUp(self, tiles, win, draw, events):
+        solver.clearBoard(self, tiles)
+        for row in range(9):
+            for col in range(9):
+                num = random.randint(1, 10 + self.randomness)
+                if num < 10:
+                    if self.isSafe(tiles[row * 9 + col], tiles, num):
+                        self.board[col][row][0] = num
+                        tiles[row * 9 + col].preset = True
 
-        for l in num:
-            self.board[l[0]][l[1]][0] = l[2]
-            tiles[l[1] * 9 + l[0]].preset = True
+        if not solver.start(self, tiles, win, draw, events, True):
+            self.setUp(tiles, win, draw, events)
+
+        for row in range(9):
+            for col in range(9):
+                if random.randint(0, math.floor((self.difficulty/2))+1) >= 1:
+                    self.board[col][row][0] = 0
+                    tiles[row*9 + col].preset = False
+                else:
+                    tiles[row * 9 + col].preset = True
 
     def getSquare(self, t):
         xInd, yInd = math.floor(t.xInd / 3) * 3, math.floor(t.yInd / 3) * 3
@@ -60,19 +70,6 @@ class Board:
                 return
 
         self.finish = True
-
-    def printBoard(self):
-        print("---------------------------------------")
-        string = ""
-        for row in range(len(self.board)):
-            if row % 3 == 0 and row != 0:
-                string += ("- " + " - "*2 + (" + " + " - "*3)*2 + "\n")
-            for col in range(len(self.board[row])):
-                if col % 3 == 0 and col != 0:
-                    string += "|  "
-                string += str(self.board[col][row][0]) + "  "
-            string += "\n"
-        print(string)
 
     def isSafe(self, t, tiles, value=None):
         x, y = t.xInd, t.yInd
