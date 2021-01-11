@@ -1,5 +1,5 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/YayLOfficial/sudoku)
-[![Download Link](https://www.mediafire.com/file/9pza94iad7f06fm/Sudoku+Game.zip/file)
+[![Download Link]()](https://www.mediafire.com/file/9pza94iad7f06fm/Sudoku+Game.zip/file)
 
 Sudoku game with solver.
 
