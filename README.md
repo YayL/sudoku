@@ -11,7 +11,7 @@ TAB - Turn on preset mode to draw your own puzzle
 
 S - Automaticaly solve the board
 
-X - Get a pre-setup board (Working on adding so the board will be set up in new and random ways everytime)
+X - Generate a Sudoku puzzle for you to solve (Might stumble sometimes so just relaunch the application and try again)
 
 -----------------------------------------------------------------
 			
